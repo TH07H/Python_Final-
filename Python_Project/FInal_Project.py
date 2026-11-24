@@ -1,3 +1,6 @@
+## To run this program the audio files must be downloaded and saved as an MP3 file in the folder of the program 
+## The slider does not work and will only serve to restart the song, this a bug that needs to be fixed in future updates 
+## Have fun!
 import numpy as np
 import librosa
 import pygame
