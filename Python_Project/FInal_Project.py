@@ -1,6 +1,7 @@
 ## To run this program the audio files must be downloaded and saved as an MP3 file in the folder of the program 
 ## The slider does not work and will only serve to restart the song, this a bug that needs to be fixed in future updates 
 ## Have fun!
+
 import numpy as np
 import librosa
 import pygame
@@ -28,10 +29,10 @@ file_path = file_name
 
 
 # Display audio information
-duration = len(audio) / sample_rate
+duration = (len(audio) / sample_rate)
 print("Sample Rate:", sample_rate)
 print("Number of Samples:", len(audio))
-print("Duration:", duration, "seconds")
+print("Duration:", duration, "Seconds")
 
 
 # Exponential smoothing
@@ -79,8 +80,6 @@ for start in range(0, len(audio) - frame_size + 1, hop_size):
 
 # Convert to NumPy array
 spectrum_values = np.array(spectrum_values)
-print("Spectrum Shape:", spectrum_values.shape)
-
 
 # Normalize each frequency band independently
 band_scale = np.percentile(spectrum_values, 85, axis=0)
@@ -90,13 +89,9 @@ minimum_scale = np.max(spectrum_values) * 0.01
 band_scale = np.maximum(band_scale, minimum_scale)
 spectrum_values = spectrum_values / (band_scale + 1e-10)
 spectrum_values = np.clip(spectrum_values, 0, 1)
-
-# Smooth each bar over time
 smooth_spectrum = np.zeros_like(spectrum_values)
 
 for i in range(num_bars):smooth_spectrum[:, i] = exponential_smoothing(spectrum_values[:, i], alpha)
-print("Total Frames:", len(smooth_spectrum))
-print("Number of Circular Bars:", num_bars)
 
 # Initialize Pygame
 pygame.init()
